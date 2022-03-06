@@ -2,7 +2,10 @@
 
 const { app, BrowserWindow, Notification } = require('electron')
 const path = require('path')
-
+const is_mac = process.platform === 'darwin'
+if (is_mac) {
+    app.dock.hide()
+}
 function createWindow() {
     const win = new BrowserWindow({
         width: 420,
@@ -10,16 +13,13 @@ function createWindow() {
         transparent: true,
         frame: false,
         alwaysOnTop: true,
-        titleBarStyle: 'hidden',
         resizable: false,
+        visibleOnAllWorkspaces: true,
     })
 
     win.loadFile('index.html')
-    win.setAlwaysOnTop(true, 'screen');
-    win.addListener("double-click", () => {
-        win.width = 400;
-        win.height = 300;
-    })
+    win.setAlwaysOnTop(true, 'screen-saver');
+    win.setVisibleOnAllWorkspaces(true)
 }
 
 
